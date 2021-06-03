@@ -7,11 +7,28 @@ Environment variables:
 - `MANIFEST_USER`: Git user
 - `MANIFEST_REPO`: Git repository
 - `CONTAINER_REPO`: Container repository
-- `SVC_PATH`: Relative path to the target service manifest
+- `CONTAINER_TAG`: Container tag generated in current build
+- `SVC_PATH`: Service kustomization path relative to the project root
 
 Example usage in a Drone pipeline:
 ```yaml
 ...
+- name: push-registry
+  image: plugins/docker
+  settings:
+    context: .
+    dockerfile: ./Dockerfile
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    registry: harbor.mycompany.com
+    repo: harbor.mycompany.com/myuser/mysvc
+    tags:
+      - ${DRONE_COMMIT_BRANCH}-${DRONE_COMMIT_SHA:0:7}
+      - latest
+  when:
+    event: push
 - name: update-kustomization
   pull: if-not-exists
   image: minghsu0107/update-kustomization:v1.0.0
@@ -22,8 +39,11 @@ Example usage in a Drone pipeline:
     MANIFEST_USER: myuser
     MANIFEST_REPO: mysvc
     CONTAINER_REPO: harbor.mycompany.com/myuser/mysvc
+    CONTAINER_TAG: ${DRONE_COMMIT_BRANCH}-${DRONE_COMMIT_SHA:0:7}
     SVC_PATH: staging/mysvc
   when:
     event: push
+  depends_on:
+    - push-registry
 ```
-Where `staging/mysvc` is the kustomization folder path relative to the project root.
+In the above example, the new tag is in the form of `${DRONE_COMMIT_BRANCH}-${DRONE_COMMIT_SHA:0:7}`, where `DRONE_COMMIT_BRANCH` and `DRONE_COMMIT_SHA` are environment variables provided by Drone at run time. 
