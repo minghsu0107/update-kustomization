@@ -54,7 +54,7 @@ Example usage in a Drone pipeline:
       from_secret: ssh_key
     MANIFEST_HOST: git.mycompany.com
     MANIFEST_USER: myuser
-    MANIFEST_REPO: mysvc
+    MANIFEST_REPO: myapp-manifests
     MANIFEST_BRANCH: ${DRONE_COMMIT_BRANCH}
     IMAGES: harbor.mycompany.com/myuser/mysvc1,harbor.mycompany.com/myuser/mysvc2
     IMAGE_TAG: ${DRONE_COMMIT_BRANCH}-${DRONE_COMMIT_SHA:0:7}
