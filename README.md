@@ -1,5 +1,5 @@
 # Update Kustomization
-A Drone CI plugin for updating an image tag using kustomize.
+A Drone CI plugin for updating image tags using kustomize.
 
 Environment variables:
 - `SSH_KEY`: Base64-encoded private key of your manifest repo
