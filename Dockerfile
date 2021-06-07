@@ -1,16 +1,15 @@
 FROM line/kubectl-kustomize:1.20.2-3.9.1
 
-RUN mkdir -p /app
-WORKDIR /app
-COPY entrypoint.sh .
-RUN chmod +x entrypoint.sh
+COPY entrypoint.sh /bin/
+RUN chmod +x /bin/entrypoint.sh
 
 ENV SSH_KEY=
-ENV IMAGE_REPO=
+ENV IMAGES=
 ENV IMAGE_TAG=
 ENV MANIFEST_HOST=
 ENV MANIFEST_USER=
 ENV MANIFEST_REPO=
-ENV SVC_PATH=
+ENV MANIFEST_BRANCH=
+ENV KUSTOMIZATION=
 
-ENTRYPOINT ["/app/entrypoint.sh"]
+ENTRYPOINT ["/bin/entrypoint.sh"]
