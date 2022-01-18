@@ -60,7 +60,7 @@ name: update-kustomization
 steps:
 - name: kustomization
   pull: if-not-exists
-  image: minghsu0107/update-kustomization:v1.0.3
+  image: minghsu0107/update-kustomization
   environment:
     SSH_KEY:
       from_secret: ssh_key

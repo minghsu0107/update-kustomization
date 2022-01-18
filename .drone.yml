@@ -1,0 +1,56 @@
+kind: pipeline
+name: default
+
+x-build-docker-image: &x-build-docker-image
+  image: plugins/docker
+  settings:
+    tags:
+      - ${DRONE_COMMIT_BRANCH}-${DRONE_COMMIT_SHA:0:7}
+      - latest
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+
+steps:
+- name: publish_linux_amd64
+  <<: *x-build-docker-image
+  settings:
+    repo: minghsu0107/update-kustomization
+    dockerfile: Dockerfile
+  depends_on:
+  - clone
+  when:
+    event:
+    - push
+
+trigger:
+  branch:
+  - main
+---
+kind: pipeline
+type: docker
+name: release
+
+platform:
+  os: linux
+  arch: amd64
+
+x-build-docker-image: &x-build-docker-image
+  image: plugins/docker
+  settings:
+    tags:
+      - ${DRONE_TAG}
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+steps:
+- name: publish_release
+  <<: *x-build-docker-image
+  settings:
+    repo: minghsu0107/update-kustomization
+    dockerfile: Dockerfile
+  when:
+    event:
+    - tag
