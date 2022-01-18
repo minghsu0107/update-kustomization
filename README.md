@@ -67,7 +67,7 @@ steps:
     MANIFEST_HOST: git.mycompany.com
     MANIFEST_USER: myuser
     MANIFEST_REPO: myapp-manifests
-    MANIFEST_BRANCH: ${DRONE_COMMIT_BRANCH}
+    MANIFEST_BRANCH: main
     IMAGES: harbor.mycompany.com/myuser/mysvc1,harbor.mycompany.com/myuser/mysvc2
     IMAGE_TAG: ${DRONE_COMMIT_BRANCH}-${DRONE_COMMIT_SHA:0:7}
     KUSTOMIZATION: overlays/${DRONE_COMMIT_BRANCH}
