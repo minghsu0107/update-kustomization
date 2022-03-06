@@ -1,0 +1,5 @@
+name: 'update-kustomization'
+description: 'Update Kustomization'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
