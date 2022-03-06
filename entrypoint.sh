@@ -12,5 +12,7 @@ do
     kustomize edit set image $IMAGE:$IMAGE_TAG
 done
 
+git config --global user.name $MANIFEST_USER
+git config --global user.email $MANIFEST_USER_EMAIL
 git add . && git commit --allow-empty -m "🚀 update to ${IMAGE_TAG}"
 git push ssh://git@$MANIFEST_HOST/$MANIFEST_USER/$MANIFEST_REPO.git
