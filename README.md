@@ -50,7 +50,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           
       - name: Deploy Docker Image
-        uses: minghsu0107/update-kustomization@v1.0.5
+        uses: minghsu0107/update-kustomization
         env:
           SSH_KEY: ${{ secrets.SSH_KEY }}
           MANIFEST_HOST: git.mycompany.com
