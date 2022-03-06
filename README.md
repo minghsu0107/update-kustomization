@@ -4,7 +4,8 @@ An CI image for updating image tags using kustomize.
 Environment variables:
 - `SSH_KEY`: Base64-encoded private ssh key of `MANIFEST_USER`
 - `MANIFEST_HOST`: Manifest git server host
-- `MANIFEST_USER`: Manifest git user
+- `MANIFEST_USER`: Manifest git user name
+- `MANIFEST_USER_EMAIL`: Manifest git user email
 - `MANIFEST_REPO`: Manifest git repository
 - `MANIFEST_BRANCH`: Manifest repository branch
 - `IMAGES`: Updated images (comma-separated list)
@@ -54,6 +55,7 @@ jobs:
           SSH_KEY: ${{ secrets.SSH_KEY }}
           MANIFEST_HOST: git.mycompany.com
           MANIFEST_USER: myuser
+          MANIFEST_USER_EMAIL: myuser@mycompany.com
           MANIFEST_REPO: myapp-manifests
           MANIFEST_BRANCH: main
           IMAGES: harbor.mycompany.com/myuser/mysvc1
@@ -115,6 +117,7 @@ steps:
       from_secret: ssh_key
     MANIFEST_HOST: git.mycompany.com
     MANIFEST_USER: myuser
+    MANIFEST_USER_EMAIL: myuser@mycompany.com
     MANIFEST_REPO: myapp-manifests
     MANIFEST_BRANCH: main
     IMAGES: harbor.mycompany.com/myuser/mysvc1,harbor.mycompany.com/myuser/mysvc2
