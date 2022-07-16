@@ -1,5 +1,42 @@
 name: 'update-kustomization'
 description: 'Update Kustomization'
+
+inputs:
+  ssh_key:
+    required: true
+    description: base64 encoded ssh key
+  images:
+    required: true
+    description: updated images (comma-separated list)
+  image_tag:
+    required: true
+    description: image tag generated in current build
+    default: latest
+  kustomization:
+    required: true
+    description: kustomization path relative to the project root
+  manifest_host:
+    required: true
+  manifest_user:
+    required: true
+  manifest_user_email:
+    required: true
+  manifest_repo:
+    required: true
+  manifest_branch:
+    required: true
+
+
 runs:
   using: 'docker'
   image: 'Dockerfile'
+  env:
+    SSH_KEY: ${{ inputs.ssh_key }}
+    IMAGES: ${{ inputs.images }}
+    IMAGE_TAG: ${{ inputs.image_tag }}
+    KUSTOMIZATION: ${{ inputs.kustomization }}
+    MANIFEST_HOST: ${{ inputs.manifest_host }}
+    MANIFEST_USER: ${{ inputs.manifest_user }}
+    MANIFEST_USER_EMAIL: ${{ inputs.manifest_user_email }}
+    MANIFEST_REPO: ${{ inputs.manifest_repo }}
+    MANIFEST_BRANCH: ${{ inputs.manifest_branch }}
